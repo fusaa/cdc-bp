@@ -47,7 +47,11 @@ def create_table(conn, table_name):
                 status VARCHAR(50)
             )
         """)
-        print(conn.commit())
+        conn.commit()
+    
+    with conn.cursor() as cur:
+        cur.execute(f"ALTER TABLE {table_name} REPLICA IDENTITY FULL") # we need this to check the 'before' and 'after' values in the trigger - temp workaround
+        conn.commit()
 
 
 def insert_transactions(conn, transactions, table_name):
@@ -92,7 +96,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     args = parser.parse_args()
-    # print(f"Arguments: {args}")
+    print(f"Arguments:\n {args}")
 
     try:
         conn = psycopg2.connect(
