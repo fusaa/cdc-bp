@@ -139,6 +139,29 @@ services:
     networks:
       - cdc-bp
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    ports:
+      - "5433:5432"  # 
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fin_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_HOST_AUTH_METHOD: trust
+    command: ["postgres", "-c", "wal_level=logical"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    networks:
+      - cdc-bp
+
 networks:
   cdc-bp:
     name: cdc-bp
