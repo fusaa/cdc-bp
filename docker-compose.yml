@@ -101,10 +101,6 @@ services:
       KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       ENABLE_DEBEZIUM_SCRIPTING: "true"
-      # KEY_CONVERTER_SCHEMAS_ENABLE: "false"
-      # VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
-      # CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
-      # CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8083 || exit 1"]
       start_period: 15s
